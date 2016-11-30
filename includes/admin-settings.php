@@ -1,5 +1,5 @@
 <div class="wrap">
-    <h2><?php _e('Power Dashboard', 'bbpd'); ?></h2>
+    <h2><?php _e('Dashboard Welcome for Beaver Builder', 'bbpd'); ?></h2>
     <div style="display: none;"><a href="https://wpbeaveraddons.com" target="_blank" style="font-size: 13px; text-decoration: none;">by BeaverAddons</a></div>
     <?php if ( ! empty( $_POST ) && ! isset( $_POST['email'] ) ) { ?>
         <div class="updated">
