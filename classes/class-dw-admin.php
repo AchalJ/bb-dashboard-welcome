@@ -68,12 +68,12 @@ final class BB_Power_Dashboard_Admin {
         global $wp_roles;
 
         self::$roles        = $wp_roles->get_names();
-        self::$current_role = array_shift( wp_get_current_user()->roles );
+        self::$current_role = self::get_current_role();
         self::$template     = get_option( 'bbpd_template' );
 
         if ( is_array( self::$template ) && isset( self::$template[self::$current_role] ) && self::$template[self::$current_role] != 'none' ) {
             remove_action( 'welcome_panel', 'wp_welcome_panel' );
-            add_action( 'welcome_panel', __CLASS__ . '::dashboard_content' );
+            add_action( 'welcome_panel', __CLASS__ . '::welcome_panel' );
         }
     }
 
@@ -110,20 +110,6 @@ final class BB_Power_Dashboard_Admin {
     }
 
     /**
-     * Output the content for power dashboard.
-     *
-     * @since 1.0.0
-     * @return void
-     */
-    static public function dashboard_content()
-    {
-        $template = self::$template;
-        $slug = $template[self::$current_role];
-        echo '<style>.welcome-panel {padding: 0;} .welcome-panel .welcome-panel-close {z-index: 1;}</style>';
-        echo do_shortcode('[fl_builder_insert_layout slug="'.$slug.'"]');
-    }
-
-    /**
      * Hook the setting label and custom title in admin menu.
      *
      * @since 1.0.0
@@ -150,9 +136,19 @@ final class BB_Power_Dashboard_Admin {
      */
     static public function settings_page()
     {
-        self::$template  = get_option( 'bbpd_template' );
         self::$templates = self::get_bb_templates();
         include DWBB_DIR . 'includes/admin-settings.php';
+    }
+
+    /**
+     * Output the content for power dashboard.
+     *
+     * @since 1.0.0
+     * @return void
+     */
+    static public function welcome_panel()
+    {
+        include DWBB_DIR . 'includes/welcome-panel.php';
     }
 
     /**
@@ -167,6 +163,20 @@ final class BB_Power_Dashboard_Admin {
             return;
         }
         update_option( 'bbpd_template', $_POST['bbpd_template'] );
+    }
+
+    /**
+     * Get current user role.
+     *
+     * @since 1.0.0
+     * @return string
+     */
+    static private function get_current_role()
+    {
+        $user   = wp_get_current_user();
+        $roles  = array_shift( $user->roles );
+
+        return $roles;
     }
 
     /**
@@ -212,13 +222,13 @@ final class BB_Power_Dashboard_Admin {
      * @param array $data
      * @return string
      */
-    static public function get_selected( $key = '', $value = '', $data = array() )
+    static private function get_selected( $key = '', $value = '', $data = array() )
     {
         $selected = ' selected="selected"';
         if ( is_array( $data ) && isset( $data[$key] ) && $data[$key] == $value ) {
             return $selected;
         }
-        if ( !is_array( $data ) || count( $data ) == 0 ) {
+        if ( ! is_array( $data ) || count( $data ) == 0 ) {
             if ( $key == $value ) {
                 return $selected;
             }
