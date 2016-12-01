@@ -44,6 +44,15 @@ final class BB_Power_Dashboard_Admin {
     static protected $current_role;
 
     /**
+     * Holds the CSS classes.
+     *
+     * @since 1.0.0
+     * @access protected
+     * @var string
+     */
+    static protected $classes;
+
+    /**
 	 * Initializes the admin settings.
 	 *
 	 * @since 1.0.0
@@ -74,8 +83,14 @@ final class BB_Power_Dashboard_Admin {
         if ( is_array( self::$template ) &&
                 isset( self::$template[self::$current_role] ) &&
                     self::$template[self::$current_role] != 'none' ) {
+
             remove_action( 'welcome_panel', 'wp_welcome_panel' );
             add_action( 'welcome_panel', __CLASS__ . '::welcome_panel' );
+
+            if ( ! current_user_can( 'edit_theme_options' ) ) {
+                self::$classes = 'welcome-panel';
+                add_action( 'admin_notices', __CLASS__ . '::welcome_panel' );
+            }
         }
     }
 
@@ -99,10 +114,6 @@ final class BB_Power_Dashboard_Admin {
 
 		// Save settings
 		add_action( 'fl_builder_admin_settings_save', __CLASS__ . '::save_settings' );
-
-        if ( current_user_can( 'read' ) ) {
-            //add_action( 'admin_menu', __CLASS__ . '::admin_menu' );
-        }
     }
 
     /**
