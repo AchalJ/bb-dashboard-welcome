@@ -11,14 +11,14 @@ Replaces the default WordPress dashboard welcome panel with custom designed Beav
 
 == Description ==
 
-This gives you full control over the WordPress welcome panel using Beaver Builder. You can personalize the dashboard with content and design built with Beaver Builder. You can add heading, contact information, form, video, images, affiliate links, etc.
+Dashboard Welcome by [Builder Addons](https://wpbeaveraddons.com/?utm_medium=bb-dashboard-welcome&utm_source=repo-readme&utm_campaign=repo-homepage-link "Beaver Addons") gives you full control over the WordPress welcome panel using Beaver Builder. You can personalize the dashboard with content and design built with Beaver Builder. You can add heading, contact information, form, video, images, affiliate links, etc.
 
-PLUS, you can display individual template as per the user roles.
+PLUS, you can display a template as per the user role.
 
 = How this works? =
 
 *   Create a layout with Beaver Builder either in backend or front-end.
-*   Go to plugin settings and select the layout that you've created from dropdown for any user role.
+*   Go to plugin settings and select the layout from dropdown for any user role.
 *   Save the setting. Done!
 
 
