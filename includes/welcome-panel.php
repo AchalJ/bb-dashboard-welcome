@@ -1,4 +1,4 @@
-<style type="text/css" id="bb-dashboard-header-css">
+<style type="text/css" id="bb-dashboard-welcome-css">
     .welcome-panel {
         padding: 0;
     }
@@ -11,7 +11,7 @@
     <?php echo do_shortcode('[fl_builder_insert_layout slug="'.self::$template[self::$current_role].'"]'); ?>
 </div>
 
-<script type="text/javascript" id="bb-dashboard-header-js">
+<script type="text/javascript" id="bb-dashboard-welcome-js">
     jQuery(document).ready(function($) {
         <?php if ( ! current_user_can( 'edit_theme_options' ) ) { ?>
             $('#bb-dashboard-welcome').insertBefore('#dashboard-widgets-wrap');
