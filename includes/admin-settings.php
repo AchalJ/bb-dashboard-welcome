@@ -1,13 +1,6 @@
-<div class="wrap">
-    <h2><?php _e('Dashboard Welcome for Beaver Builder', 'bbpd'); ?></h2>
-    <div style="display: none;"><a href="https://wpbeaveraddons.com" target="_blank" style="font-size: 13px; text-decoration: none;">by BeaverAddons</a></div>
-    <?php if ( ! empty( $_POST ) && ! isset( $_POST['email'] ) ) { ?>
-        <div class="updated">
-            <p><?php esc_html_e( 'Settings updated!', 'bbpd' ); ?></p>
-        </div>
-    <?php } ?>
-    <hr>
-    <form method="post" id="pd-settings-form" action="<?php echo admin_url( '/options-general.php?page=pd-settings' ); ?>">
+<div id="fl-bb-dashboard-welcome-form" class="fl-settings-form">
+    <h2 style="display: none;"><?php _e('Dashboard Welcome', 'bbpd'); ?></h2>
+    <form method="post" id="pd-settings-form" action="<?php FLBuilderAdminSettings::render_form_action( 'bb-dashboard-welcome' ); ?>">
         <div class="icon32 icon32-pd-settings" id="icon-pd"><br /></div>
         <table class="bbpd-settings-table wp-list-table widefat">
             <tr valign="top">

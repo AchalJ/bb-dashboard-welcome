@@ -71,7 +71,9 @@ final class BB_Power_Dashboard_Admin {
         self::$current_role = self::get_current_role();
         self::$template     = get_option( 'bbpd_template' );
 
-        if ( is_array( self::$template ) && isset( self::$template[self::$current_role] ) && self::$template[self::$current_role] != 'none' ) {
+        if ( is_array( self::$template ) &&
+                isset( self::$template[self::$current_role] ) &&
+                    self::$template[self::$current_role] != 'none' ) {
             remove_action( 'welcome_panel', 'wp_welcome_panel' );
             add_action( 'welcome_panel', __CLASS__ . '::welcome_panel' );
         }
@@ -91,8 +93,15 @@ final class BB_Power_Dashboard_Admin {
 
         add_action( 'admin_enqueue_scripts', __CLASS__ . '::load_scripts' );
 
+        // Add settings to BB's options panel
+		add_filter( 'fl_builder_admin_settings_nav_items', __CLASS__ . '::bb_nav_items' );
+		add_action( 'fl_builder_admin_settings_render_forms', __CLASS__ . '::bb_nav_forms' );
+
+		// Save settings
+		add_action( 'fl_builder_admin_settings_save', __CLASS__ . '::save_settings' );
+
         if ( current_user_can( 'read' ) ) {
-            add_action( 'admin_menu', __CLASS__ . '::admin_menu' );
+            //add_action( 'admin_menu', __CLASS__ . '::admin_menu' );
         }
     }
 
@@ -104,28 +113,26 @@ final class BB_Power_Dashboard_Admin {
 	 */
     static public function load_scripts()
     {
-        if ( isset( $_GET['page'] ) && $_GET['page'] == 'pd-settings' ) {
+        if ( isset( $_GET['page'] ) && $_GET['page'] == 'fl-builder-settings' ) {
             wp_enqueue_style( 'bbpd-style', DWBB_URL . 'assets/css/admin.css', array(), rand() );
         }
     }
 
     /**
-     * Hook the setting label and custom title in admin menu.
+     * Hook the setting label and custom title in BB settings.
      *
      * @since 1.0.0
      * @return mixed
      */
-    static public function admin_menu()
+    static public function bb_nav_items( $items )
     {
-        if ( current_user_can( 'manage_options' ) ) {
+        $items['bb-dashboard-welcome'] = array(
+			'title' 	=> __( 'Dashboard Welcome', 'bbpd' ),
+			'show'		=> true,
+			'priority'	=> 750
+		);
 
- 			$title = __('DWBB', 'bbpd');
- 			$cap   = 'manage_options';
- 			$slug  = 'pd-settings';
- 			$func  = __CLASS__ . '::settings_page';
-
- 			add_submenu_page( 'options-general.php', $title, $title, $cap, $slug, $func );
- 		}
+		return $items;
     }
 
     /**
@@ -134,10 +141,10 @@ final class BB_Power_Dashboard_Admin {
      * @since 1.0.0
      * @return void
      */
-    static public function settings_page()
+    static public function bb_nav_forms()
     {
         self::$templates = self::get_bb_templates();
-        include DWBB_DIR . 'includes/admin-settings.php';
+        require_once DWBB_DIR . 'includes/admin-settings.php';
     }
 
     /**
