@@ -5,6 +5,10 @@
     .welcome-panel .welcome-panel-close {
         z-index: 1;
     }
+    .welcome-panel .fl-builder-content ul,
+    .welcome-panel .fl-builder-content ol {
+        list-style: inherit;
+    }
 </style>
 
 <div id="bb-dashboard-welcome" class="<?php echo self::$classes; ?>">
