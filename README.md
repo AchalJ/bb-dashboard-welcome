@@ -9,7 +9,7 @@ PLUS, you can display a template as per the user role.
 
 #### How this works? ####
 
-*   Create a layout with Beaver Builder either in backend or front-end.
+*   Create a layout with Beaver Builder.
 *   Go to plugin settings and select the layout from dropdown for any user role.
 *   Save the setting. Done!
 
