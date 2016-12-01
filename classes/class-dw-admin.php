@@ -102,11 +102,16 @@ final class BB_Power_Dashboard_Admin {
      */
     static public function init_hooks()
     {
-        if ( ! is_admin() ) {
+        if ( ! is_admin() && ! class_exists( 'FLBuilder' ) ) {
 			return;
 		}
 
         add_action( 'admin_enqueue_scripts', __CLASS__ . '::load_scripts' );
+
+        global $pagenow;
+        if( 'index.php' == $pagenow ) {
+            add_action( 'admin_enqueue_scripts',  'FLBuilder::register_layout_styles_scripts' );
+        }
 
         // Add settings to BB's options panel
 		add_filter( 'fl_builder_admin_settings_nav_items', __CLASS__ . '::bb_nav_items' );
