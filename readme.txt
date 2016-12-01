@@ -11,7 +11,7 @@ Replaces the default WordPress dashboard welcome panel with custom designed Beav
 
 == Description ==
 
-Dashboard Welcome by [Builder Addons](https://wpbeaveraddons.com/?utm_medium=bb-dashboard-welcome&utm_source=repo-readme&utm_campaign=repo-homepage-link "Beaver Addons") gives you full control over the WordPress welcome panel using Beaver Builder. You can personalize the dashboard with content and design built with Beaver Builder. You can add heading, contact information, form, video, images, affiliate links, etc.
+Dashboard Welcome by [Beaver Addons](https://wpbeaveraddons.com/?utm_medium=bb-dashboard-welcome&utm_source=repo-readme&utm_campaign=repo-homepage-link "Beaver Addons") gives you full control over the WordPress welcome panel using Beaver Builder. You can personalize the dashboard with content and design built with Beaver Builder. You can add heading, contact information, form, video, images, affiliate links, etc.
 
 PLUS, you can display a template as per the user role.
 
