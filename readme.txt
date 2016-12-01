@@ -38,6 +38,7 @@ PLUS, you can display a template as per the user role.
 == Screenshots ==
 
 1. Admin Dashboard - Custom welcome panel
+2. Plugin settings - Dashboard Welcome settings
 
 
 == Changelog ==
