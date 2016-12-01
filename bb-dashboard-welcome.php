@@ -3,7 +3,7 @@
 /**
  * Plugin Name: Dashboard Welcome for Beaver Builder
  * Description: Replaces the default WordPress dashboard welcome panel with a Beaver Builder template.
- * Author: Beaver Addons
+ * Author: Beaver Addons, Achal Jain
  * Author URI: https://wpbeaveraddons.com
  * Version: 1.0.0
  * Copyright: (c) 2016 IdeaBox Creations
