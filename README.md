@@ -7,7 +7,7 @@ Dashboard Welcome by [Builder Addons](https://wpbeaveraddons.com/?utm_medium=bb-
 
 PLUS, you can display a template as per the user role.
 
-##### How this works? #####
+#### How this works? ####
 
 *   Create a layout with Beaver Builder either in backend or front-end.
 *   Go to plugin settings and select the layout from dropdown for any user role.
@@ -29,5 +29,5 @@ PLUS, you can display a template as per the user role.
 
 ### Changelog ###
 
-##### 1.0.0 - December 1, 2016 #####
+#### 1.0.0 - December 1, 2016 ####
 *   Initial Release
