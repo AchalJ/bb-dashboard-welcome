@@ -9,6 +9,12 @@
     .welcome-panel .fl-builder-content ol {
         list-style: inherit;
     }
+    .welcome-panel .fl-builder-content p {
+        color: inherit;
+        font-size: inherit;
+        margin: inherit;
+        margin-bottom: 10px;
+    }
 </style>
 
 <div id="bb-dashboard-welcome" class="<?php echo self::$classes; ?>">
