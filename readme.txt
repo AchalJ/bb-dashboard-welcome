@@ -2,7 +2,7 @@
 Contributors: ideaboxcreations, ibachal
 Tags: beaver builder, beaver builder addon, dashboard welcome, dashboard, beaver addons, page builder, page builder plugin, beaver builder extensions, front-end builder, drag and drop builder, editor, front-end editor, page layout, visual builder
 Requires at least: 3.6
-Tested up to: 4.6.1
+Tested up to: 4.7
 Stable tag: trunk
 License: GPL2+
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
