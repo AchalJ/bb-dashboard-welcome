@@ -5,15 +5,25 @@
     .welcome-panel .welcome-panel-close {
         z-index: 1;
     }
-    .welcome-panel .fl-builder-content ul,
-    .welcome-panel .fl-builder-content ol {
+    #bb-dashboard-welcome {
+        -webkit-font-smoothing: antialiased;
+    }
+    #bb-dashboard-welcome .fl-builder-content ul,
+    #bb-dashboard-welcome .fl-builder-content ol {
         list-style: inherit;
     }
-    .welcome-panel .fl-builder-content p {
+    #bb-dashboard-welcome .fl-builder-content p {
         color: inherit;
         font-size: inherit;
         margin: inherit;
         margin-bottom: 10px;
+    }
+    #bb-dashboard-welcome input:focus,
+    #bb-dashboard-welcome textarea:focus,
+    #bb-dashboard-welcome select:focus,
+    #bb-dashboard-welcome button:focus {
+        -webkit-box-shadow: none;
+        box-shadow: none;
     }
 </style>
 
@@ -21,12 +31,12 @@
     <?php echo do_shortcode('[fl_builder_insert_layout slug="'.self::$template[self::$current_role].'"]'); ?>
 </div>
 
+<?php if ( ! current_user_can( 'edit_theme_options' ) ) { ?>
 <script type="text/javascript" id="bb-dashboard-welcome-js">
     ;(function($) {
         $(document).ready(function() {
-            <?php if ( ! current_user_can( 'edit_theme_options' ) ) { ?>
-                $('#bb-dashboard-welcome').insertBefore('#dashboard-widgets-wrap');
-            <?php } ?>
+            $('#bb-dashboard-welcome').insertBefore('#dashboard-widgets-wrap');
         });
     })(jQuery);
 </script>
+<?php } ?>
