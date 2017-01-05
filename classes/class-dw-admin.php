@@ -26,6 +26,15 @@ final class BB_Power_Dashboard_Admin {
     static protected $templates;
 
     /**
+     * Holds the option.
+     *
+     * @since 1.0.0
+     * @access protected
+     * @var array
+     */
+    static protected $dismissible;
+
+    /**
      * Holds the user roles.
      *
      * @since 1.0.0
@@ -79,6 +88,7 @@ final class BB_Power_Dashboard_Admin {
         self::$roles        = $wp_roles->get_names();
         self::$current_role = self::get_current_role();
         self::$template     = get_option( 'bbpd_template' );
+        self::$dismissible  = get_option( 'bbpd_template_dismissible' );
 
         if ( is_array( self::$template ) &&
                 isset( self::$template[self::$current_role] ) &&
@@ -186,6 +196,7 @@ final class BB_Power_Dashboard_Admin {
             return;
         }
         update_option( 'bbpd_template', $_POST['bbpd_template'] );
+        update_option( 'bbpd_template_dismissible', $_POST['bbpd_template_dismissible'] );
     }
 
     /**

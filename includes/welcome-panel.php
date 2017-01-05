@@ -4,6 +4,9 @@
     }
     .welcome-panel .welcome-panel-close {
         z-index: 1;
+        <?php if ( 'no' == self::$dismissible[self::$current_role] ) { ?>
+            display: none;
+        <?php } ?>
     }
     #bb-dashboard-welcome {
         -webkit-font-smoothing: antialiased;
@@ -27,7 +30,10 @@
     }
 </style>
 
-<div id="bb-dashboard-welcome" class="<?php echo self::$classes; ?>">
+<div id="bb-dashboard-welcome">
+    <?php if ( ! current_user_can( 'edit_theme_options' ) ) { ?>
+        <a class="welcome-panel-close" href="<?php echo admin_url('welcome=0'); ?>"><?php _e('Dismiss'); ?></a>
+    <?php } ?>
     <?php echo do_shortcode('[fl_builder_insert_layout slug="'.self::$template[self::$current_role].'"]'); ?>
 </div>
 
@@ -35,7 +41,7 @@
 <script type="text/javascript" id="bb-dashboard-welcome-js">
     ;(function($) {
         $(document).ready(function() {
-            $('#bb-dashboard-welcome').insertBefore('#dashboard-widgets-wrap');
+            $('<div id="welcome-panel" class="welcome-panel"></div>').insertBefore('#dashboard-widgets-wrap').append($('#bb-dashboard-welcome'));
         });
     })(jQuery);
 </script>

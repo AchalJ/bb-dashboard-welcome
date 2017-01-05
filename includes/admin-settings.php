@@ -10,6 +10,9 @@
                 <th scope="row" valign="top">
                     <strong><?php esc_html_e('Select Template', 'bbpd'); ?></strong>
                 </th>
+                <th scope="row" valign="top">
+                    <strong><?php esc_html_e('Is Dismissible?', 'bbpd'); ?></strong>
+                </th>
             </tr>
             <?php $count = 0; foreach ( self::$roles as $key => $value ) : ?>
                 <tr class="<?php echo $count % 2 == 0 ? 'alternate' : ''; ?>">
@@ -20,6 +23,12 @@
                             <?php foreach ( self::$templates as $template ) { ?>
                                 <option value="<?php echo $template['slug']; ?>"<?php echo self::get_selected( $key, $template['slug'], self::$template ); ?>><?php echo $template['name']; ?></option>
                             <?php } ?>
+                        </select>
+                    </td>
+                    <td>
+                        <select name="bbpd_template_dismissible[<?php echo $key; ?>]" class="bbpd-input">
+                            <option value="yes"<?php echo self::get_selected( $key, 'yes', self::$dismissible ); ?>><?php esc_html_e('Yes', 'bbpd'); ?></option>
+                            <option value="no"<?php echo self::get_selected( $key, 'no', self::$dismissible ); ?>><?php esc_html_e('No', 'bbpd'); ?></option>
                         </select>
                     </td>
                 </tr>
