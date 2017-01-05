@@ -1,3 +1,7 @@
+== 1.0.1 ==
+*   Release date: January 5, 2016
+*   Added a toggle to show or hide "Dismiss" control
+
 == 1.0.0 ==
 *   Release date: December 1, 2016
 *   Initial Release

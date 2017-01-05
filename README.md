@@ -29,5 +29,8 @@ PLUS, you can display a template as per the user role.
 
 ### Changelog ###
 
+#### 1.0.1 - January 5, 2016 ####
+*   Added a toggle to show or hide "Dismiss" control
+
 #### 1.0.0 - December 1, 2016 ####
 *   Initial Release

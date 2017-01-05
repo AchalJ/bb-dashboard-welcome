@@ -1,6 +1,6 @@
 === Dashboard Welcome for Beaver Builder ===
 Contributors: ideaboxcreations, ibachal
-Tags: beaver builder, beaver builder addon, dashboard welcome, dashboard, beaver addons, page builder, page builder plugin, beaver builder extensions, front-end builder, drag and drop builder, editor, front-end editor, page layout, visual builder
+Tags: beaver builder, beaver builder addon, beaver builder template, dashboard welcome, dashboard widget, dashboard, beaver addons, widgets, welcome, welcome screen, page builder, page builder plugin, beaver builder extensions, front-end builder, drag and drop builder, editor, front-end editor, page layout, visual builder
 Requires at least: 3.6
 Tested up to: 4.7
 Stable tag: trunk
@@ -42,6 +42,9 @@ PLUS, you can display a template as per the user role.
 
 
 == Changelog ==
+
+= 1.0.1 - January 5, 2016 =
+*   Added a toggle to show or hide "Dismiss" control
 
 = 1.0.0 - December 1, 2016 =
 *   Initial Release
