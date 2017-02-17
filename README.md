@@ -32,7 +32,7 @@ PLUS, you can display a template as per the user role.
 #### 1.0.1 - February 17, 2017 ####
 *   Added multisite support
 
-#### 1.0.1 - January 5, 2016 ####
+#### 1.0.1 - January 5, 2017 ####
 *   Added a toggle to show or hide "Dismiss" control
 
 #### 1.0.0 - December 1, 2016 ####
