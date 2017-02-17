@@ -26,9 +26,9 @@ final class BB_Power_Dashboard_Admin {
     static protected $templates;
 
     /**
-     * Holds the Beaver Builder user templates data.
+     * Holds the Beaver Builder user templates site ID.
      *
-     * @since 1.0.0
+     * @since 1.0.2
      * @access protected
      * @var array
      */
@@ -94,11 +94,11 @@ final class BB_Power_Dashboard_Admin {
 
         global $wp_roles;
 
-        self::$roles        = $wp_roles->get_names();
-        self::$current_role = self::get_current_role();
-        self::$template     = get_option( 'bbpd_template' );
-        self::$dismissible  = get_option( 'bbpd_template_dismissible' );
-        self::$template_site  = get_option( 'bbpd_template_site' );
+        self::$roles            = $wp_roles->get_names();
+        self::$current_role     = self::get_current_role();
+        self::$template         = get_option( 'bbpd_template' );
+        self::$dismissible      = get_option( 'bbpd_template_dismissible' );
+        self::$template_site    = get_option( 'bbpd_template_site' );
 
         if ( is_array( self::$template ) &&
                 isset( self::$template[self::$current_role] ) &&
@@ -280,13 +280,15 @@ final class BB_Power_Dashboard_Admin {
 				array(
 					'taxonomy'  => 'fl-builder-template-type',
 					'field'     => 'slug',
-					'terms'     => $type
+					'terms'     => array( 'layout', 'row' )
 				)
 			)
 		);
 
         $posts = get_posts( $args );
 
+        // Multisite support.
+        // @since 1.0.2
         if ( is_multisite() ) {
             switch_to_blog(1);
 
