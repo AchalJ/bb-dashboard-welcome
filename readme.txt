@@ -45,6 +45,7 @@ PLUS, you can display a template as per the user role.
 
 = 1.0.2 - February 17, 2017 =
 *   Added multisite support
+*   Added support for saved "row" templates
 
 = 1.0.1 - January 5, 2017 =
 *   Added a toggle to show or hide "Dismiss" control

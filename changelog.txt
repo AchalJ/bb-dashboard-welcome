@@ -1,6 +1,7 @@
 == 1.0.2 ==
 *   Release date: February 17, 2017
 *   Added multisite support
+*   Added support for saved "row" templates
 
 == 1.0.1 ==
 *   Release date: January 5, 2017
