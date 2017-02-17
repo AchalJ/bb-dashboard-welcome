@@ -3,7 +3,7 @@
         padding: 0;
     }
     .welcome-panel .welcome-panel-close {
-        z-index: 1;
+        z-index: 100;
         <?php if ( 'no' == self::$dismissible[self::$current_role] ) { ?>
             display: none;
         <?php } ?>
