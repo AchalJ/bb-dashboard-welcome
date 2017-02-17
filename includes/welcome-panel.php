@@ -34,7 +34,7 @@
     <?php if ( ! current_user_can( 'edit_theme_options' ) ) { ?>
         <a class="welcome-panel-close" href="<?php echo admin_url('welcome=0'); ?>"><?php _e('Dismiss'); ?></a>
     <?php } ?>
-    <?php echo do_shortcode('[fl_builder_insert_layout slug="'.self::$template[self::$current_role].'"]'); ?>
+    <?php self::render_template(); ?>
 </div>
 
 <?php if ( ! current_user_can( 'edit_theme_options' ) ) { ?>

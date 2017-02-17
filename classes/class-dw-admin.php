@@ -26,6 +26,15 @@ final class BB_Power_Dashboard_Admin {
     static protected $templates;
 
     /**
+     * Holds the Beaver Builder user templates data.
+     *
+     * @since 1.0.0
+     * @access protected
+     * @var array
+     */
+    static protected $template_site;
+
+    /**
      * Holds the option.
      *
      * @since 1.0.0
@@ -89,6 +98,7 @@ final class BB_Power_Dashboard_Admin {
         self::$current_role = self::get_current_role();
         self::$template     = get_option( 'bbpd_template' );
         self::$dismissible  = get_option( 'bbpd_template_dismissible' );
+        self::$template_site  = get_option( 'bbpd_template_site' );
 
         if ( is_array( self::$template ) &&
                 isset( self::$template[self::$current_role] ) &&
@@ -197,6 +207,31 @@ final class BB_Power_Dashboard_Admin {
         }
         update_option( 'bbpd_template', $_POST['bbpd_template'] );
         update_option( 'bbpd_template_dismissible', $_POST['bbpd_template_dismissible'] );
+        if ( isset( $_POST['bbpd_template_site'] ) ) {
+            update_option( 'bbpd_template_site', $_POST['bbpd_template_site'] );
+        }
+    }
+
+    /**
+	 * Renders template via shortcode.
+	 *
+	 * @since 1.0.2
+	 * @access public
+	 * @return mixed
+	 */
+    static public function render_template()
+    {
+        $site = '';
+
+        if ( is_array( self::$template_site ) && isset( self::$template_site[self::$current_role] ) ) {
+            $site = self::$template_site[self::$current_role];
+        }
+
+        if ( empty( $site ) ) {
+            echo do_shortcode('[fl_builder_insert_layout slug="' . self::$template[self::$current_role] . '"]');
+        } else {
+            echo do_shortcode('[fl_builder_insert_layout slug="' . self::$template[self::$current_role] . '" site="1"]');
+        }
     }
 
     /**
@@ -207,8 +242,19 @@ final class BB_Power_Dashboard_Admin {
      */
     static private function get_current_role()
     {
-        $user   = wp_get_current_user();
-        $roles  = array_shift( $user->roles );
+        // Get current user role in multisite network using WP_User_Query.
+        if ( is_multisite() ) {
+            $user_query = new WP_User_Query( array( 'blog_id' => 1 , 'include' => array( get_current_user_id() ) ) );
+            if ( ! empty( $user_query->results ) ) {
+            	$roles = $user_query->results[0]->roles;
+                if ( is_array( $roles ) ) {
+                    return $roles[0];
+                }
+            }
+        } else {
+            $user   = wp_get_current_user();
+            $roles  = array_shift( $user->roles );
+        }
 
         return $roles;
     }
@@ -225,7 +271,7 @@ final class BB_Power_Dashboard_Admin {
 	{
 		$templates = array();
 
-		foreach( get_posts( array(
+        $args = array(
 			'post_type'       => 'fl-builder-template',
 			'orderby'         => 'title',
 			'order'           => 'ASC',
@@ -237,10 +283,31 @@ final class BB_Power_Dashboard_Admin {
 					'terms'     => $type
 				)
 			)
-		) ) as $post ) {
+		);
+
+        $posts = get_posts( $args );
+
+        if ( is_multisite() ) {
+            switch_to_blog(1);
+
+            // Get posts from parent site.
+            $parent_posts = get_posts( $args );
+
+            // Loop through each parent site post
+            // and add site_id to post object.
+            foreach ( $parent_posts as $parent_post ) {
+                $parent_post->site_id = 1;
+            }
+
+            $posts = array_merge( $posts, $parent_posts );
+            restore_current_blog();
+        }
+
+		foreach( $posts as $post ) {
 			$templates[] = array(
 				'slug' => $post->post_name,
-				'name' => $post->post_title
+				'name' => $post->post_title,
+                'site' => isset( $post->site_id ) ? $post->site_id : null
 			);
 		}
 

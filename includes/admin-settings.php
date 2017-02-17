@@ -18,12 +18,15 @@
                 <tr class="<?php echo $count % 2 == 0 ? 'alternate' : ''; ?>">
                     <td><?php echo $value; ?></td>
                     <td>
-                        <select name="bbpd_template[<?php echo $key; ?>]" class="bbpd-input">
+                        <select name="bbpd_template[<?php echo $key; ?>]" class="bbpd-input bbpd-template-select">
                             <option value="none"<?php echo self::get_selected( $key, 'none', self::$template ); ?>><?php esc_html_e('None', 'bbpd'); ?></option>
                             <?php foreach ( self::$templates as $template ) { ?>
-                                <option value="<?php echo $template['slug']; ?>"<?php echo self::get_selected( $key, $template['slug'], self::$template ); ?>><?php echo $template['name']; ?></option>
+                                <option data-site="<?php echo $template['site']; ?>" value="<?php echo $template['slug']; ?>"<?php echo self::get_selected( $key, $template['slug'], self::$template ); ?>><?php echo $template['name']; ?></option>
                             <?php } ?>
                         </select>
+                        <?php if ( is_multisite() ) { ?>
+                            <input type="hidden" name="bbpd_template_site[<?php echo $key; ?>]" value="<?php echo self::$template_site[$key]; ?>" />
+                        <?php } ?>
                     </td>
                     <td>
                         <select name="bbpd_template_dismissible[<?php echo $key; ?>]" class="bbpd-input">
@@ -37,4 +40,21 @@
         <?php submit_button(); ?>
         <?php wp_nonce_field('bbpd-settings', 'bbpd-settings-nonce'); ?>
     </form>
+
+    <?php if ( is_multisite() ) { ?>
+    <script type="text/javascript">
+    (function ($) {
+        <?php $data = array(); foreach ( self::$templates as $template ) {
+            $data[$template['slug']] = $template['site'];
+        } ?>
+        var data = <?php echo json_encode( $data ); ?>;
+        $('.bbpd-template-select').on('change', function() {
+            var value = $(this).val();
+            var siteId = data[value];
+            $(this).parent().find('input[type="hidden"]').val(siteId);
+        });
+    })(jQuery);
+    </script>
+    <?php } ?>
+
 </div>
