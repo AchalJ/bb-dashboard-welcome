@@ -1,3 +1,7 @@
+== 1.0.2 ==
+*   Release date: February 17, 2016
+*   Added multisite support
+
 == 1.0.1 ==
 *   Release date: January 5, 2016
 *   Added a toggle to show or hide "Dismiss" control
