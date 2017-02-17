@@ -29,6 +29,9 @@ PLUS, you can display a template as per the user role.
 
 ### Changelog ###
 
+#### 1.0.1 - February 17, 2017 ####
+*   Added multisite support
+
 #### 1.0.1 - January 5, 2016 ####
 *   Added a toggle to show or hide "Dismiss" control
 
