@@ -37,6 +37,16 @@
                 </tr>
             <?php $count++; endforeach; ?>
         </table>
+
+        <?php if ( is_multisite() && get_current_blog_id() == 1 ) { ?>
+            <p>
+                <label>
+                    <input type="checkbox" value="1" name="bbpd_hide_from_subsite" <?php if ( get_option( 'bbpd_hide_from_subsite' ) == true ) { echo 'checked="checked"'; } ?> />
+                    <?php _e( 'Hide settings from network subsites', 'bbpd' ); ?>
+                </label>
+            </p>
+        <?php } ?>
+
         <?php submit_button(); ?>
         <?php wp_nonce_field('bbpd-settings', 'bbpd-settings-nonce'); ?>
     </form>

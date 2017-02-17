@@ -78,27 +78,32 @@ final class BB_Power_Dashboard_Admin {
 	 */
     static public function init()
     {
-        add_action( 'admin_init', __CLASS__ . '::admin_init' );
+        add_action( 'plugins_loaded', __CLASS__ . '::plugin_init' );
         add_action( 'plugins_loaded', __CLASS__ . '::init_hooks' );
     }
 
     /**
-     * Trigger hooks and actions on admin_init.
+     * Trigger hooks and actions on plugins_loaded.
      *
      * @since 1.0.0
      * @return void
      */
-    static public function admin_init()
+    static public function plugin_init()
     {
+        if ( !is_admin() ) {
+            return;
+        }
+
         self::save_settings();
+        self::delete_option();
 
         global $wp_roles;
 
         self::$roles            = $wp_roles->get_names();
         self::$current_role     = self::get_current_role();
-        self::$template         = get_option( 'bbpd_template' );
-        self::$dismissible      = get_option( 'bbpd_template_dismissible' );
-        self::$template_site    = get_option( 'bbpd_template_site' );
+        self::$template         = self::get_option( 'bbpd_template' );
+        self::$dismissible      = self::get_option( 'bbpd_template_dismissible' );
+        self::$template_site    = self::get_option( 'bbpd_template_site' );
 
         if ( is_array( self::$template ) &&
                 isset( self::$template[self::$current_role] ) &&
@@ -129,13 +134,23 @@ final class BB_Power_Dashboard_Admin {
         add_action( 'admin_enqueue_scripts', __CLASS__ . '::load_scripts' );
 
         global $pagenow;
-        if( 'index.php' == $pagenow ) {
+        if ( 'index.php' == $pagenow ) {
             add_action( 'admin_enqueue_scripts',  'FLBuilder::register_layout_styles_scripts' );
         }
 
         // Add settings to BB's options panel
-		add_filter( 'fl_builder_admin_settings_nav_items', __CLASS__ . '::bb_nav_items' );
-		add_action( 'fl_builder_admin_settings_render_forms', __CLASS__ . '::bb_nav_forms' );
+        if ( is_multisite() ) {
+            $hide_settings = get_blog_option( 1, 'bbpd_hide_from_subsite' );
+            if ( $hide_settings == false ) {
+                self::bb_nav_hooks();
+            }
+            if ( $hide_settings == true && get_current_blog_id() == 1  ) {
+                self::bb_nav_hooks();
+            }
+        }
+        else {
+		    self::bb_nav_hooks();
+        }
 
 		// Save settings
 		add_action( 'fl_builder_admin_settings_save', __CLASS__ . '::save_settings' );
@@ -152,6 +167,18 @@ final class BB_Power_Dashboard_Admin {
         if ( isset( $_GET['page'] ) && $_GET['page'] == 'fl-builder-settings' ) {
             wp_enqueue_style( 'bbpd-style', DWBB_URL . 'assets/css/admin.css', array(), rand() );
         }
+    }
+
+    /**
+     * Trigger hooks on function call.
+     *
+     * @since 1.0.3
+     * @return void
+     */
+    static public function bb_nav_hooks()
+    {
+        add_filter( 'fl_builder_admin_settings_nav_items', __CLASS__ . '::bb_nav_items' );
+        add_action( 'fl_builder_admin_settings_render_forms', __CLASS__ . '::bb_nav_forms' );
     }
 
     /**
@@ -205,10 +232,19 @@ final class BB_Power_Dashboard_Admin {
         if( ! isset( $_POST['bbpd-settings-nonce'] ) || ! wp_verify_nonce( $_POST['bbpd-settings-nonce'], 'bbpd-settings' ) ) {
             return;
         }
-        update_option( 'bbpd_template', $_POST['bbpd_template'] );
-        update_option( 'bbpd_template_dismissible', $_POST['bbpd_template_dismissible'] );
+
+        self::update_option( 'bbpd_template', $_POST['bbpd_template'] );
+        self::update_option( 'bbpd_template_dismissible', $_POST['bbpd_template_dismissible'] );
+
         if ( isset( $_POST['bbpd_template_site'] ) ) {
-            update_option( 'bbpd_template_site', $_POST['bbpd_template_site'] );
+            self::update_option( 'bbpd_template_site', $_POST['bbpd_template_site'] );
+        }
+
+        if ( isset( $_POST['bbpd_hide_from_subsite'] ) ) {
+            self::update_option( 'bbpd_hide_from_subsite', true );
+        }
+        else {
+            delete_option( 'bbpd_hide_from_subsite' );
         }
     }
 
@@ -231,6 +267,68 @@ final class BB_Power_Dashboard_Admin {
             echo do_shortcode('[fl_builder_insert_layout slug="' . self::$template[self::$current_role] . '"]');
         } else {
             echo do_shortcode('[fl_builder_insert_layout slug="' . self::$template[self::$current_role] . '" site="1"]');
+        }
+    }
+
+    /**
+	 * Returns an option from the database for
+	 * the admin settings page.
+	 *
+	 * @since 1.0.3
+	 * @param string $option The option key.
+     * @param bool $network_override Multisite setting override check.
+	 * @return mixed
+	 */
+    static private function get_option( $option, $network_override = true )
+    {
+        if ( is_network_admin() ) {
+            $value = get_site_option( $option );
+        }
+        elseif ( ! $network_override && is_multisite() ) {
+            $value = get_site_option( $option );
+            $value = false === $value ? get_blog_option( 1, $option ) : $value;
+        }
+        elseif ( $network_override && is_multisite() ) {
+            $value = get_option( $option );
+            $value = false === $value ? get_blog_option( 1, $option ) : $value;
+        }
+        else {
+            $value = get_option( $option );
+        }
+
+        return $value;
+    }
+
+    /**
+	 * Updates an option from the admin settings page.
+	 *
+	 * @since 1.0.3
+	 * @param string $option The option key.
+	 * @param mixed $value The value to update.
+	 * @return mixed
+	 */
+    static private function update_option( $option, $value )
+    {
+        if ( is_network_admin() ) {
+            update_site_option( $option, $value );
+        } else {
+            update_option( $option, $value );
+        }
+    }
+
+    /**
+	 * Deletes an option from the admin settings page
+     * via URL parameter.
+	 *
+	 * @since 1.0.3
+	 * @return mixed
+	 */
+    static private function delete_option()
+    {
+        if ( isset( $_GET['delete_option'] ) && !empty( $_GET['delete_option'] ) ) {
+            delete_option( 'bbpd_template' );
+            delete_option( 'bbpd_template_dismissible' );
+            delete_option( 'bbpd_template_site' );
         }
     }
 
@@ -290,19 +388,32 @@ final class BB_Power_Dashboard_Admin {
         // Multisite support.
         // @since 1.0.2
         if ( is_multisite() ) {
-            switch_to_blog(1);
 
-            // Get posts from parent site.
-            $parent_posts = get_posts( $args );
+            $blog_id = get_current_blog_id();
 
-            // Loop through each parent site post
-            // and add site_id to post object.
-            foreach ( $parent_posts as $parent_post ) {
-                $parent_post->site_id = 1;
+            if ( $blog_id != 1 ) {
+                switch_to_blog(1);
+
+                // Get posts from main site.
+                $main_posts = get_posts( $args );
+
+                // Loop through each main site post
+                // and add site_id to post object.
+                foreach ( $main_posts as $main_post ) {
+                    $main_post->site_id = 1;
+                }
+
+                $posts = array_merge( $posts, $main_posts );
+
+                restore_current_blog();
             }
-
-            $posts = array_merge( $posts, $parent_posts );
-            restore_current_blog();
+            else {
+                // Loop through each main site post
+                // and add site_id to post object.
+                foreach ( $posts as $post ) {
+                    $post->site_id = 1;
+                }
+            }
         }
 
 		foreach( $posts as $post ) {
