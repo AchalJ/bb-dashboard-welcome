@@ -44,7 +44,7 @@ PLUS, you can display a template as per the user role.
 == Changelog ==
 
 = 1.0.3 - February 18, 2017 =
-*   Multisite: Fixed duplicate template bug on main site settings
+*   Multisite: Fixed duplicate template bug in main site settings
 *   Multisite: Added an option to hide settings from sub-sites
 *   Multisite: Activating template from main site will work on all sub-sites
 
