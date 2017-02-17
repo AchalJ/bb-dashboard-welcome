@@ -78,7 +78,7 @@ final class BB_Power_Dashboard_Admin {
 	 */
     static public function init()
     {
-        add_action( 'plugins_loaded', __CLASS__ . '::plugin_init' );
+        add_action( 'admin_init', __CLASS__ . '::admin_init' );
         add_action( 'plugins_loaded', __CLASS__ . '::init_hooks' );
     }
 
@@ -88,12 +88,8 @@ final class BB_Power_Dashboard_Admin {
      * @since 1.0.0
      * @return void
      */
-    static public function plugin_init()
+    static public function admin_init()
     {
-        if ( !is_admin() ) {
-            return;
-        }
-
         self::save_settings();
         self::delete_option();
 
