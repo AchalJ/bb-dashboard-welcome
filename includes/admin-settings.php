@@ -25,7 +25,7 @@
                             <?php } ?>
                         </select>
                         <?php if ( is_multisite() ) { ?>
-                            <input type="hidden" name="bbpd_template_site[<?php echo $key; ?>]" value="<?php echo self::$template_site[$key]; ?>" />
+                            <input type="hidden" name="bbpd_template_site[<?php echo $key; ?>]" value="<?php echo isset(self::$template_site[$key]) ? self::$template_site[$key] : ''; ?>" />
                         <?php } ?>
                     </td>
                     <td>

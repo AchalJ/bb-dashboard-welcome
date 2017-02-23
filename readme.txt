@@ -43,6 +43,10 @@ PLUS, you can display a template as per the user role.
 
 == Changelog ==
 
+= 1.0.4 - February 23, 2017 =
+*   Fixed: template showing on all of the admin pages for user roles excluding administrator
+*   Fixed: PHP notice on displaying settings for a new user role
+
 = 1.0.3 - February 18, 2017 =
 *   Multisite: Fixed duplicate template bug in main site settings
 *   Multisite: Added an option to hide settings from sub-sites

@@ -101,6 +101,11 @@ final class BB_Power_Dashboard_Admin {
         self::$dismissible      = self::get_option( 'bbpd_template_dismissible' );
         self::$template_site    = self::get_option( 'bbpd_template_site' );
 
+        global $pagenow;
+        if ( 'index.php' != $pagenow ) {
+            return;
+        }
+
         if ( is_array( self::$template ) &&
                 isset( self::$template[self::$current_role] ) &&
                     self::$template[self::$current_role] != 'none' ) {

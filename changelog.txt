@@ -1,3 +1,8 @@
+== 1.0.4 ==
+*   Release date: February 23, 2017
+*   Fixed: template showing on all of the admin pages for user roles excluding administrator
+*   Fixed: PHP notice on displaying settings for a new user role
+
 == 1.0.3 ==
 *   Release date: February 18, 2017
 *   Multisite: Fixed duplicate template bug in main site settings
