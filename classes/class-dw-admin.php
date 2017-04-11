@@ -346,14 +346,14 @@ final class BB_Power_Dashboard_Admin {
             $user_query = new WP_User_Query( array( 'blog_id' => 1 , 'include' => array( get_current_user_id() ) ) );
             if ( ! empty( $user_query->results ) ) {
             	$roles = $user_query->results[0]->roles;
-                if ( is_array( $roles ) ) {
+                if ( is_array( $roles ) && count( $roles ) ) {
                     return $roles[0];
                 }
             }
-        } else {
-            $user   = wp_get_current_user();
-            $roles  = array_shift( $user->roles );
         }
+
+        $user   = wp_get_current_user();
+        $roles  = array_shift( $user->roles );
 
         return $roles;
     }
