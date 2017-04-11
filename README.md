@@ -29,6 +29,9 @@ PLUS, you can display a template as per the user role.
 
 ### Changelog ###
 
+#### 1.0.5 - April 17, 2017 ####
+*   Multisite: Fixed template not showing on dashboard for some user roles in sub-sites
+
 #### 1.0.4 - February 23, 2017 ####
 *   Fixed: template showing on all of the admin pages for user roles excluding administrator
 *   Fixed: PHP notice on displaying settings for a new user role

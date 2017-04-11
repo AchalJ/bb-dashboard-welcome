@@ -1,3 +1,7 @@
+== 1.0.5 ==
+*   Release date: April 12, 2017
+*   Multisite: Fixed template not showing on dashboard for some user roles in sub-sites
+
 == 1.0.4 ==
 *   Release date: February 23, 2017
 *   Fixed: template showing on all of the admin pages for user roles excluding administrator
