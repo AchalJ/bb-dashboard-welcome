@@ -4,7 +4,7 @@
 *   Fixed: FLBuilder class check condition
 
 == 1.0.5 ==
-*   Release date: April 12, 2017
+*   Release date: April 17, 2017
 *   Multisite: Fixed template not showing on dashboard for some user roles in sub-sites
 
 == 1.0.4 ==

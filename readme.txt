@@ -2,7 +2,7 @@
 Contributors: ideaboxcreations, ibachal
 Tags: beaver builder, beaver builder addon, beaver builder template, dashboard welcome, dashboard widget, dashboard, beaver addons, widgets, welcome, welcome screen, beaver builder extensions
 Requires at least: 3.6
-Tested up to: 4.7.2
+Tested up to: 4.8.0
 Stable tag: trunk
 License: GPL2+
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -42,6 +42,10 @@ PLUS, you can display a template as per the user role.
 
 
 == Changelog ==
+
+= 1.0.6 - July 13, 2017 =
+*   Fixed: Conflicts with the global variable $current_user
+*   Fixed: FLBuilder class check condition
 
 = 1.0.5 - April 17, 2017 =
 *   Multisite: Fixed template not showing on dashboard for some user roles in sub-sites
