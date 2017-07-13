@@ -128,9 +128,13 @@ final class BB_Power_Dashboard_Admin {
      */
     static public function init_hooks()
     {
-        if ( ! is_admin() && ! class_exists( 'FLBuilder' ) ) {
+        if ( ! is_admin() ) {
 			return;
 		}
+
+        if ( ! class_exists( 'FLBuilder' ) ) {
+            return;
+        }
 
         add_action( 'admin_enqueue_scripts', __CLASS__ . '::load_scripts' );
 
@@ -353,7 +357,8 @@ final class BB_Power_Dashboard_Admin {
         }
 
         $user   = wp_get_current_user();
-        $roles  = array_shift( $user->roles );
+        $roles  = $user->roles;
+        $roles  = array_shift( $roles );
 
         return $roles;
     }
