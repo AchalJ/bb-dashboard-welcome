@@ -2,7 +2,7 @@
 Contributors: ideaboxcreations, ibachal
 Tags: beaver builder, beaver builder addon, beaver builder template, dashboard welcome, dashboard widget, dashboard, beaver addons, widgets, welcome, welcome screen, beaver builder extensions
 Requires at least: 3.6
-Tested up to: 4.8.0
+Tested up to: 4.9.5
 Stable tag: trunk
 License: GPL2+
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
